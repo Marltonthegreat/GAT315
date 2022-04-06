@@ -6,6 +6,9 @@ using UnityEngine.EventSystems;
 public class BodyCreator : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IPointerExitHandler
 {
     [SerializeField] Body bodyPrefab;
+    [SerializeField] FloatData speed;
+    [SerializeField] FloatData size;
+    [SerializeField] FloatData density;
 
 	bool action = false;
 	bool pressed = false;
@@ -13,12 +16,17 @@ public class BodyCreator : MonoBehaviour, IPointerDownHandler, IPointerUpHandler
 
     void Update()
 	{
-        if (action)
+        if (action && (pressed || Input.GetKey(KeyCode.LeftControl)))
         {
+            pressed = false;
+
             Vector2 position = Simulator.Instance.GetScreenToWorldPosition(Input.mousePosition);
 
             Body body = Instantiate(bodyPrefab, position, Quaternion.identity);
-            body.ApplyForce(Random.insideUnitCircle.normalized);
+            body.shape.size = size.value;
+            body.shape.density = density.value;
+
+            body.ApplyForce(Random.insideUnitCircle.normalized * speed.value, Body.eForceMode.Velocity);
 
             Simulator.Instance.bodies.Add(body);
         }

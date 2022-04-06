@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Simulator : Singleton<Simulator>
 {
+	[SerializeField] List<Force> forces;
+
 	public List<Body> bodies = new List<Body>();
 	Camera activeCamera;
 
@@ -14,15 +16,19 @@ public class Simulator : Singleton<Simulator>
 
     private void Update()
     {
-        foreach(var body in bodies)
+		forces.ForEach(force => force.ApplyForce(bodies));
+
+		bodies.ForEach(body =>
         {
 			Integrator.SemiExplicitEuler(body, Time.deltaTime);
-        }
+        });
+
+		bodies.ForEach(body => body.acceleration = Vector2.zero);
     }
 
     public Vector3 GetScreenToWorldPosition(Vector2 screen)
 	{
 		Vector3 world = activeCamera.ScreenToWorldPoint(screen);
-		return new Vector3(world.x, world.y, 0);
+		return world;
 	}
 }
