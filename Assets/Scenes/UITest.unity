@@ -665,7 +665,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_BackGroundColor: {r: 0.039215688, g: 0.039215688, b: 0.18039216, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -865,6 +865,8 @@ MonoBehaviour:
   forces:
   - {fileID: 993511106}
   - {fileID: 993511107}
+  fixedFPS: {fileID: 11400000, guid: d53bd5868fcf4f84186ff7019479b42e, type: 2}
+  textFPS: {fileID: 11400000, guid: b5d2e58dc6845c345aee1a69d0cf4b4b, type: 2}
   bodies: []
 --- !u!4 &993511105
 Transform:
@@ -1058,7 +1060,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 200, y: 180}
+  m_SizeDelta: {x: 200, y: 210}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1248095803
 MonoBehaviour:

@@ -5,6 +5,12 @@ using UnityEngine;
 public class Simulator : Singleton<Simulator>
 {
 	[SerializeField] List<Force> forces;
+	[SerializeField] IntData fixedFPS;
+	[SerializeField] StringData textFPS;
+
+	float timeAccumulator = 0;
+	float fixedDeltaTime { get => 1.0f / fixedFPS.value; }
+	float previousFPS = 1.0f / 60;
 
 	public List<Body> bodies = new List<Body>();
 	Camera activeCamera;
@@ -14,15 +20,26 @@ public class Simulator : Singleton<Simulator>
 		activeCamera = Camera.main;
 	}
 
-    private void Update()
-    {
+	private void Update()
+	{
+		float currentFPS = 1.0f / Time.deltaTime;
+		float temp = currentFPS;
+		float smoothing = .9f;
+		currentFPS = (currentFPS * smoothing) + (previousFPS * (1.0f - smoothing));
+		previousFPS = temp;
+		textFPS.value = (currentFPS).ToString("F1");
+		timeAccumulator += Time.deltaTime;
+
 		forces.ForEach(force => force.ApplyForce(bodies));
+		while (timeAccumulator > fixedDeltaTime)
+		{
+			bodies.ForEach(body =>
+			{
+				Integrator.SemiExplicitEuler(body, Time.deltaTime);
+			});
 
-		bodies.ForEach(body =>
-        {
-			Integrator.SemiExplicitEuler(body, Time.deltaTime);
-        });
-
+			timeAccumulator -= fixedDeltaTime;
+		}
 		bodies.ForEach(body => body.acceleration = Vector2.zero);
     }
 
