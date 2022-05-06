@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: Gravitation
   m_EditorClassIdentifier: 
   _value: 1
-  min: 0.1
+  min: 0
   max: 20
