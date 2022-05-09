@@ -9,7 +9,7 @@ public class Simulator : Singleton<Simulator>
 	[SerializeField] IntData fixedFPS;
 	[SerializeField] StringData textFPS;
 
-	BroadPhase broadPhase = new Quadtree();
+	BroadPhase broadPhase = new BVH();
 	float timeAccumulator = 0;
 	float fixedDeltaTime { get => 1.0f / fixedFPS.value; }
 	float previousFPS = 1.0f / 60;

@@ -5,9 +5,9 @@ using UnityEngine;
 public class QuadtreeNode
 {
     AABB nodeAABB;
+    List<Body> nodeBodies = new List<Body>();
     int nodeCapacity;
     int nodeLevel;
-    List<Body> nodeBodies = new List<Body>();
 
     QuadtreeNode NorthEast;
     QuadtreeNode NorthWest;
